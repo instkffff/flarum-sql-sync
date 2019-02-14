@@ -1,0 +1,28 @@
+{
+  "name": "flarum-sql-sync",
+  "version": "1.0.0",
+  "description": "none flarum program, just for my aim.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/instkffff/flarum-sql-sync.git"
+  },
+  "keywords": [
+    "eve-online",
+    "flarum",
+    "mysql"
+  ],
+  "author": "nightcandle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/instkffff/flarum-sql-sync/issues"
+  },
+  "homepage": "https://github.com/instkffff/flarum-sql-sync#readme",
+  "dependencies": {
+    "eve-swagger": "^0.3.3",
+    "mysql": "^2.16.0"
+  }
+}
