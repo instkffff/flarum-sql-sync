@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/instkffff/flarum-sql-sync#readme",
   "dependencies": {
+    "combijson": "^2.0.0",
     "eve-swagger": "^0.3.3",
     "mysql": "^2.16.0"
   }
