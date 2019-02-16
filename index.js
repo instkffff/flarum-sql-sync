@@ -41,7 +41,7 @@ function Query(condition){
 	)
 }
 
-// 'UPDATE group_user SET group_id = ? WHERE user_id = ?';
+// 'UPDATE group_user SET group_id = ? WHERE user_id = ?'
 function Assign(condition,user_id,role){
 	return new Promise(
 		function(resolve,reject){
@@ -54,6 +54,46 @@ function Assign(condition,user_id,role){
 			})
 		}
 	)
+}
+
+// 'UPDATE users SET bio = ? WHERE id = ?'
+function EveEsi(condition,id,bio){
+	return new Promise(
+		function(resolve,reject){
+			let modSqlParams = [bio,id]
+			connection.query(condition,modSqlParams,function(err,result){
+				if(err){
+					reject(err)
+				}
+				resolve('sync Esi successfully')
+			})
+		}
+	)
+}
+
+//alliance_name
+async function SyncBio(id,alliance_id,corporation_id){
+	let alliance_info_obj = await esi2.alliances(alliance_id).info()
+	let alliance_info_json = JSON.stringify(alliance_info_obj)
+	let corporation_info_obj = await esi2.corporations(corporation_id).info()
+	let corporation_info_json = JSON.stringify(corporation_info_obj)
+	let alliance_info = JSON.parse(alliance_info_json)
+	let corporation_info = JSON.parse(corporation_info_json)
+	let alliance_name = alliance_info.alliance_name
+	let corporation_name = corporation_info.corporation_name
+	let bio_json = {
+		'alliance_name':alliance_name,
+		'corporation_name':corporation_name,
+		'alliance_id':alliance_id,
+		'corporation_id':corporation_id
+	}
+	let bio = JSON.stringify(bio_json)
+	console.log(bio)
+	EveEsi('UPDATE users SET bio = ? WHERE id = ?',id,bio).then(result => {
+		console.log(result)
+	}).catch(error => {
+		console.log(error)
+	})
 }
 
 async function Sync(){
@@ -80,6 +120,7 @@ async function Sync(){
 				let charInfo = JSON.parse(charInfoJson)
 				let alliance_id = charInfo.alliance_id
 				let corporation_id = charInfo.corporation_id
+				SyncBio(id,alliance_id,corporation_id)
 				int1 = whitelistAlliance.indexOf(alliance_id.toString())
 				int2 = whitelistGroup.indexOf(group_id.toString())
 				if(int2 >= 0){
@@ -105,11 +146,11 @@ async function Sync(){
 	
 }
 
+Sync()
 
-
-setInterval(function(){
-	Sync()
-},600000)
+//setInterval(function(){
+//	Sync()
+//},600000)
 
 //ignore error
 process.on("uncatchException", function(e) {
