@@ -146,11 +146,11 @@ async function Sync(){
 	
 }
 
-Sync()
 
-//setInterval(function(){
-//	Sync()
-//},600000)
+
+setInterval(function(){
+	Sync()
+},600000)
 
 //ignore error
 process.on("uncatchException", function(e) {
