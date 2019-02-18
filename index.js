@@ -9,10 +9,10 @@ whitelistAlliance = ['99003581','99006828','99007498']
 
 const connection = mysql.createPool({
 	connectionLimit : 1000,
-	host : '199.247.16.189',
-	user : 'admin',
-	password : '123456',
-	database : 'flarum'
+	host : 'localhost',
+	user : '',
+	password : '',
+	database : ''
 })
 
 const esi2 = esi({
